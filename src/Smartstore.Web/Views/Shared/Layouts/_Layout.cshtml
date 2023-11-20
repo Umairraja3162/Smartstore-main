@@ -1,0 +1,213 @@
+﻿@inject Smartstore.Core.Stores.IStoreContext StoreContext
+
+@{
+    Layout = "_Document";
+
+    var hasLeftCol = await Display.ZoneHasWidgetsAsync("left");
+    var hasRightCol = await Display.ZoneHasWidgetsAsync("right");
+    var hideLeftCol = ViewBag.HideLeftCol == true;
+    var hideRightCol = ViewBag.HideRightCol == true;
+
+    int mainColspan = 12;
+    int cols = 1;
+    if (hasLeftCol)
+    {
+        mainColspan -= 3;
+        cols += 1;
+    }
+    if (hasRightCol)
+    {
+        mainColspan -= 3;
+        cols += 1;
+    }
+
+    Assets.BodyAttributes.AppendCssClass("lyt-cols-" + cols);
+
+    if (Display.GetThemeVariable<bool>("boxed"))
+    {
+        Assets.BodyAttributes.AppendCssClass("boxed");
+    }
+}
+
+<div id="page">
+    <div class="canvas-blocker canvas-slidable"></div>
+
+    <div class="page-main canvas-slidable">
+
+        <header id="header" zone-name="header" replace-content="true">
+            <div class="menubar-section d-none d-lg-block @(Display.GetThemeVariable<bool>("inverse-menubar") ? "menubar-inverse" : "menubar-light")">
+                <div class="container menubar-container">
+                    @await Component.InvokeAsync("TopBar")
+                </div>
+            </div>
+            <div class="shopbar-section @(Display.GetThemeVariable<bool>("inverse-shopbar") ? "shopbar-inverse" : "shopbar-light")">
+                <div class="container shopbar-container">
+                    @await Component.InvokeAsync("ShopBar")
+                </div>
+            </div>
+            <div class="megamenu-section d-none d-lg-block">
+                <nav class="navbar @(Display.GetThemeVariable<bool>("inverse-navbar") ? "navbar-inverse" : "navbar-light")">
+                    <div class="container megamenu-container">
+                        <menu name="Main" template="Main" />
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <div id="content-wrapper">
+
+            <partial name="JavaScriptDisabledWarning" />
+                <div class="app">
+  
+      <div class="cardList">
+          <button class="cardList__btn btn btn--left" style="opacity: 1; pointer-events: all;">
+              <div class="icon">
+                  <svg>
+                      <use xlink:href="#arrow-left"></use>
+                  </svg>
+              </div>
+          </button>
+  
+          <div class="cards__wrapper">
+              <div class="card current--card" style="--card-translateY-offset: 0%; --current-card-rotation-offset: 0;">
+                  <div class="card__image">
+                      <img src="https://source.unsplash.com/Z8dtTatMVMw" alt="">
+                  </div>
+              </div>
+  
+              <div class="card next--card" style="--card-translateY-offset: 0%;">
+                  <div class="card__image">
+                      <img src="https://source.unsplash.com/9dmycbFE7mQ" alt="">
+                  </div>
+              </div>
+  
+              <div class="card previous--card" style="--card-translateY-offset: 0%;">
+                  <div class="card__image">
+                      <img src="https://source.unsplash.com/m7K4KzL5aQ8" alt="">
+                  </div>
+              </div>
+          </div>
+  
+          <button class="cardList__btn btn btn--right" style="opacity: 1; pointer-events: all;">
+              <div class="icon">
+                  <svg>
+                      <use xlink:href="#arrow-right"></use>
+                  </svg>
+              </div>
+          </button>
+      </div>
+  
+      <div class="infoList">
+          <div class="info__wrapper">
+              <div class="info current--info" style="transform: translate3d(0px, 0px, 32px);">
+                  <h1 class="text name" style="opacity: 1; transform: translate(0px, 0px);">Highlands</h1>
+                  <h4 class="text location" style="opacity: 1; transform: translate(0px, 0px);">Scotland</h4>
+                  <p class="text description" style="opacity: 1; transform: translate(0px, 0px);">The mountains are calling</p>
+              </div>
+  
+              <div class="info next--info">
+                  <h1 class="text name">Machu Pichu</h1>
+                  <h4 class="text location">Peru</h4>
+                  <p class="text description">Adventure is never far away</p>
+              </div>
+  
+              <div class="info previous--info">
+                  <h1 class="text name">Chamonix</h1>
+                  <h4 class="text location">France</h4>
+                  <p class="text description">Let your dreams come true</p>
+              </div>
+          </div>
+      </div>
+  
+  
+      <div class="app__bg">
+          <div class="app__bg__image current--image">
+              <img src="https://source.unsplash.com/Z8dtTatMVMw" alt="">
+          </div>
+          <div class="app__bg__image next--image">
+              <img src="https://source.unsplash.com/9dmycbFE7mQ" alt="">
+          </div>
+          <div class="app__bg__image previous--image">
+              <img src="https://source.unsplash.com/m7K4KzL5aQ8" alt="">
+          </div>
+      </div>
+  </div>
+  
+  <div class="loading__wrapper" style="pointer-events: none; opacity: 0;">
+      <div class="loader--text">Loading...</div>
+      <div class="loader">
+          <span style="background-color: rgb(0, 255, 0); transform: translate(0px, 0px);"></span>
+      </div>
+  </div>
+  
+  
+  <svg class="icons" style="display: none;">
+      <symbol id="arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <polyline points="328 112 184 256 328 400" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px"></polyline>
+      </symbol>
+      <symbol id="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <polyline points="184 112 328 256 184 400" style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:48px"></polyline>
+      </symbol>
+  </svg>  
+<div class="support">
+      <a href="https://twitter.com/DevLoop01" target="_blank"><i class="fab fa-twitter-square"></i></a>
+      <a href="https://dribbble.com/devloop01" target="_blank"><i class="fab fa-dribbble"></i></a>
+  </div> 
+
+            <zone name="content_before"></zone>
+
+            <section id="content" class="container">
+                <zone name="teaser"></zone>
+
+                <partial name="Breadcrumb" model="null" />
+
+                <div id="content-body" class="row">
+
+                    @if (hasLeftCol)
+                    {
+                        <aside id="content-left" class="col-lg-3 mb-4 mb-lg-0" attr-class='(hideLeftCol, "d-none d-lg-block")'>
+                            <zone name="aside_left_before"></zone>
+                            <zone name="left"></zone>
+                            <zone name="aside_left_after"></zone>
+                        </aside>
+                    }
+
+                    <div id="content-center" class="col-lg-@mainColspan">
+                        <zone name="main_column_before"></zone>
+                        @RenderBody()
+                        <zone name="main_column_after"></zone>
+                    </div>
+
+                    @if (hasRightCol)
+                    {
+                        <aside id="content-right" class="col-lg-3 mt-4 mt-lg-0" attr-class='(hideRightCol, "d-none d-lg-block")'>
+                            <zone name="aside_right_before"></zone>
+                            <zone name="right"></zone>
+                            <zone name="aside_right_after"></zone>
+                        </aside>
+                    }
+
+                    <zone name="content_after"></zone>
+                </div>
+            </section>
+        </div>
+
+        <zone name="footer_before"></zone>
+
+        <zone name="footer" replace-content="true">
+            @await Component.InvokeAsync("Footer")
+        </zone>
+
+        <zone name="page-end"></zone>
+    </div>
+
+    <a href="#" id="scroll-top" class="scrollto d-flex align-items-center justify-content-center shadow-sm">
+        <i class="fa fa-lg fa-angle-up"></i>
+    </a>
+</div>
+
+<partial name="Notifications" />
+<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.3/gsap.min.js"></script>
+
+<script id="rendered-js" src="./js/slider.js"></script>
